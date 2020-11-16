@@ -8,7 +8,7 @@
         borderColorDiv: '#CFCFCF',    //border color of the icon container
         borderWidthDiv: '1px',    //border width of the icon container
         borderRadiusDiv: '5px',    //border radius of the icon container
-        
+
         icon: 'fa fa-circle fa-2x',   //icon class name
 
         nodeParams: function(){
@@ -17,9 +17,10 @@
         }
     };
 
-    $.fn.cytoscapeNodeadd = function(params) {
+    var nodeadd = function(params, cy) {
         var options = $.extend(true, {}, defaults, params);
         var fn = params;
+        var container = cy.container()
 
         var functions = {
             destroy: function() {
@@ -69,7 +70,6 @@
                                 var relX = event.pageX - currentOffset.left;
                                 var relY = event.pageY - currentOffset.top;
 
-                                var cy = $container.cytoscape("get");
                                 cy.add($.extend(true,{
                                     group: "nodes",
                                     renderedPosition: {
@@ -98,23 +98,21 @@
             }
         };
         if (functions[fn]) {
-            return functions[fn].apply(this, Array.prototype.slice.call(arguments, 1));
+            return functions[fn].apply(container, Array.prototype.slice.call(arguments, 1));
         } else if (typeof fn == 'object' || !fn) {
-            return functions.init.apply(this, arguments);
+            return functions.init.apply(container, arguments);
         } else {
-            $.error("No such function `" + fn + "` for jquery.cytoscapenodeadd");
+            console.error("No such function `" + fn + "` for nodeadd");
         }
-
-        return $(this);
     };
 
-    $.fn.cynodeadd = $.fn.cytoscapeNodeadd;
+
 
     /* Adding as an extension to the core functionality of cytoscape.js*/
     $$('core', 'nodeadd', function(options) {
         var cy = this;
 
-        $(cy.container()).cytoscapeNodeadd(options);
+        $(nodeadd(options, cy));
     });
 
 })(jQuery, cytoscape);

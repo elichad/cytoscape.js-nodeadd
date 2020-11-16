@@ -10,7 +10,7 @@
 
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="https://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-        <script src="https://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.17.0/cytoscape.min.js"></script>
         <script src="cytoscape.js-nodeadd.js"></script>
 
         <style>
@@ -29,6 +29,7 @@
 			$(function(){
 				var cy = cytoscape({
 					container: document.getElementById('cy'),
+                    
 
 					style: [
 						{
